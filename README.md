@@ -37,3 +37,10 @@ Added postal=9485–9498 for relation 1155955
 Changed name:be-tarask=Швейцарыя to name:be-tarask=Швайцарыя for relation 51701
 Changed name:bn=Switzerland to name:bn=সুইজারল্যান্ড for relation 51701
 ```
+
+Please note that the elements are no longer in the original order for the changed
+elements.
+
+You can now use the resulting `augmented-liechtenstein.osm` file as you please with
+existing OpenStreetMap tools. This makes it useful to enrich data before importing
+it into the database.
