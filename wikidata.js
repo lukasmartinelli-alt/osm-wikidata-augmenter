@@ -1,6 +1,14 @@
 var wdk = require('wikidata-sdk')
 var request = require('request')
 
+function extractStatementString(entity, claimId) {
+    var claims = entity.claims[claimId];
+    if(claims && claims.length > 0) {
+        return claims[0].mainsnak.datavalue.value;
+    }
+    return undefined
+}
+
 function extractStatementIntQuantity(entity, claimId) {
     var claims = entity.claims[claimId];
     if(claims && claims.length > 0) {
@@ -8,6 +16,12 @@ function extractStatementIntQuantity(entity, claimId) {
     }
     return undefined
 }
+// https://www.wikidata.org/wiki/Property:P281
+exports.augmentPostal = function augmentPostal(entity, tags) {
+    var postal = extractStatementString(entity, "P281")
+    return Object.assign({}, tags, {"postal": postal});
+}
+
 // https://www.wikidata.org/wiki/Property:P1082
 exports.augmentPopulation = function augmentPopulation(entity, tags) {
     var population = extractStatementIntQuantity(entity, "P1082")

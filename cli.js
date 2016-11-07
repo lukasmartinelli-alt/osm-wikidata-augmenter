@@ -32,9 +32,11 @@ function buildTransformer(program) {
                     cb(tags);
                     return;
                 }
-                    var augmentedTags = augmentTranslations(entity, elem.tags);
+                    var augmentedTags = elem.tags;
+                    augmentedTags = augmentTranslations(entity, augmentedTags);
                     augmentedTags = wikidata.augmentElevation(entity, augmentedTags);
                     augmentedTags = wikidata.augmentPopulation(entity, augmentedTags);
+                    augmentedTags = wikidata.augmentPostal(entity, augmentedTags);
                     if(program.verbose) {
                         logTagDifferences(elemType, elem.id, elem.tags, augmentedTags);
                     }
