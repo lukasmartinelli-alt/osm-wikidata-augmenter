@@ -1,15 +1,23 @@
 var wdk = require('wikidata-sdk')
 var request = require('request')
 
-// https://www.wikidata.org/wiki/Property:P2044
-function augmentElevation(entity, tags) {
-    var claims = entity.claims["P2044"];
+function extractStatementIntQuantity(entity, claimId) {
+    var claims = entity.claims[claimId];
     if(claims && claims.length > 0) {
-        var elevation = parseInt(claims[0].mainsnak.datavalue.value.amount)
-        return Object.assign({}, tags, {"ele": elevation});
-    } else {
-        return tags;
+        return parseInt(claims[0].mainsnak.datavalue.value.amount)
     }
+    return undefined
+}
+// https://www.wikidata.org/wiki/Property:P1082
+exports.augmentPopulation = function augmentPopulation(entity, tags) {
+    var population = extractStatementIntQuantity(entity, "P1082")
+    return Object.assign({}, tags, {"population": population});
+}
+
+// https://www.wikidata.org/wiki/Property:P2044
+exports.augmentElevation = function augmentElevation(entity, tags) {
+    var elevation = extractStatementIntQuantity(entity, "P2044")
+    return Object.assign({}, tags, {"ele": elevation});
 }
 
 function queryWikidata(id, cb) {
@@ -29,4 +37,3 @@ function queryWikidata(id, cb) {
 }
 
 exports.queryWikidata = queryWikidata;
-exports.augmentElevation = augmentElevation;

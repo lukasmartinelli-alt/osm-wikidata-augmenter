@@ -34,6 +34,7 @@ function buildTransformer(program) {
                 }
                     var augmentedTags = augmentTranslations(entity, elem.tags);
                     augmentedTags = wikidata.augmentElevation(entity, augmentedTags);
+                    augmentedTags = wikidata.augmentPopulation(entity, augmentedTags);
                     if(program.verbose) {
                         logTagDifferences(elemType, elem.id, elem.tags, augmentedTags);
                     }
