@@ -1,0 +1,23 @@
+{
+  "name": "osm-wikidata-augmenter",
+  "version": "0.1.0",
+  "description": "Augment OSM XML file with Wikidata",
+  "main": "cli.js",
+  "bin": "cli.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type" : "git",
+    "url": "https://github.com/lukasmartinelli/osm-wikidata-augmenter.git"
+  },
+  "author": "Lukas Martinelli <me@lukasmartinelli.ch>",
+  "license": "MIT",
+  "dependencies": {
+    "deep-diff": "^0.3.4",
+    "osm-read": "^0.6.0",
+    "request": "^2.78.0",
+    "wikidata-sdk": "^4.0.6",
+    "xml-writer": "^1.6.0"
+  }
+}
