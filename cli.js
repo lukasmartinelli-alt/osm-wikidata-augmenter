@@ -2,6 +2,7 @@
 var transformXml = require('./xml');
 var augmentTranslations = require('./translations');
 var diff = require('deep-diff').diff;
+var wikidata = require('./wikidata')
 
 function logTagDifferences(elemType, osmId, originalTags, augmentedTags) {
 	var differences = diff(originalTags, augmentedTags);
@@ -22,15 +23,23 @@ function logTagDifferences(elemType, osmId, originalTags, augmentedTags) {
 
 function buildTransformer(program) {
 	function augmentTags(elemType, elem, cb) {
-		if(program.labels) {
-			augmentTranslations(elem.tags, function(augmentedTags) {
-				if(program.verbose) {
-					logTagDifferences(elemType, elem.id, elem.tags, augmentedTags);
-				}
-				elem.tags = augmentedTags;
-				cb(elem);
-			});
-		}
+            if (!elem.tags.wikidata) {
+                cb(elem);
+                return;
+            };
+            wikidata.queryWikidata(elem.tags.wikidata, function(entity) {
+                if(!entity) {
+                    cb(tags);
+                    return;
+                }
+                    var augmentedTags = augmentTranslations(entity, elem.tags);
+                    augmentedTags = wikidata.augmentElevation(entity, augmentedTags);
+                    if(program.verbose) {
+                        logTagDifferences(elemType, elem.id, elem.tags, augmentedTags);
+                    }
+                    elem.tags = augmentedTags;
+                    cb(elem);
+            });
 	}
 
 	return {
@@ -45,7 +54,6 @@ program
   .version('0.1')
   .option('-i, --input-file <input-file>', 'raw OpenStreetMap XML file source')
   .option('-o, --output-file <output-file>', 'augmented OpenStreetMap XML file target')
-  .option('--labels', 'augment OSM names with Wikidata labels')
   .option('--verbose', 'log augmentations')
   .parse(process.argv);
 
