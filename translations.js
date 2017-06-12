@@ -9,7 +9,7 @@ function augmentTranslations(entity, tags) {
     var newTags = {}
     for (var key in entity.labels) {
       var label = entity.labels[key];
-      newTags["name:" + label.language] = label.value;
+      newTags["wikidata:label:" + label.language] = label.value;
     }
     return Object.assign({}, tags, newTags);
 }

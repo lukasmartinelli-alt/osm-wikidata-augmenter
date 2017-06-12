@@ -19,19 +19,22 @@ function extractStatementIntQuantity(entity, claimId) {
 // https://www.wikidata.org/wiki/Property:P281
 exports.augmentPostal = function augmentPostal(entity, tags) {
     var postal = extractStatementString(entity, "P281")
-    return Object.assign({}, tags, {"postal": postal});
+    if (postal) return Object.assign({}, tags, {"wikidata:P281": postal});
+    return tags;
 }
 
 // https://www.wikidata.org/wiki/Property:P1082
 exports.augmentPopulation = function augmentPopulation(entity, tags) {
     var population = extractStatementIntQuantity(entity, "P1082")
-    return Object.assign({}, tags, {"population": population});
+    if (population) return Object.assign({}, tags, {"wikidata:P1082": population});
+    return tags;
 }
 
 // https://www.wikidata.org/wiki/Property:P2044
 exports.augmentElevation = function augmentElevation(entity, tags) {
     var elevation = extractStatementIntQuantity(entity, "P2044")
-    return Object.assign({}, tags, {"ele": elevation});
+    if (elevation) return Object.assign({}, tags, {"wikidata:P2044": elevation});
+    return tags;
 }
 
 function queryWikidata(id, cb) {

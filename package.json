@@ -8,12 +8,13 @@
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
-    "type" : "git",
+    "type": "git",
     "url": "https://github.com/lukasmartinelli/osm-wikidata-augmenter.git"
   },
   "author": "Lukas Martinelli <me@lukasmartinelli.ch>",
   "license": "MIT",
   "dependencies": {
+    "commander": "^2.9.0",
     "deep-diff": "^0.3.4",
     "osm-read": "^0.6.0",
     "request": "^2.78.0",
